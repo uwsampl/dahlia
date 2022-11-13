@@ -36,14 +36,16 @@ logBuffered in Test := false
 resourceGenerators in Compile += Def.task {
   import scala.sys.process._
   val file = (resourceManaged in Compile).value / "version.properties"
-  val gitHash = "git rev-parse --short HEAD".!!
-  val gitDiff = "git diff --stat".!!
-  val status = if (gitDiff.trim() != "") "dirty" else "clean"
-  println(gitDiff)
-  IO.writeLines(file, Seq(
-    s"git.status = $status",
-    s"build.date = ${new java.util.Date()}",
-    s"git.hash = $gitHash"))
+  // Commenting this out so that Dahlia build doesn't depend on being in a valid
+  // Git repo.
+  // val gitHash = "git rev-parse --short HEAD".!!
+  // val gitDiff = "git diff --stat".!!
+  // val status = if (gitDiff.trim() != "") "dirty" else "clean"
+  // println(gitDiff)
+  // IO.writeLines(file, Seq(
+  //   s"git.status = $status",
+  //   s"build.date = ${new java.util.Date()}",
+  //   s"git.hash = $gitHash"))
   Seq(file)
 }
 
